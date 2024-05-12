@@ -3,6 +3,10 @@ import cv2
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return 'Crowdmon - Video Extractor'
+
 @app.route('/extract', methods=['POST'])
 def extract(): 
     if request.method == 'POST': 
