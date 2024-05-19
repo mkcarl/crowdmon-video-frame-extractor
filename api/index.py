@@ -2,10 +2,8 @@ from io import BytesIO
 from flask import Flask, request, make_response
 import cv2
 import boto3
-import dotenv
 import os 
 
-dotenv.load_dotenv()
 cloudflare_r2_url = os.getenv('CLOUDFLARE_R2_URL')
 cloudflare_r2_key_id = os.getenv('CLOUDFLARE_R2_KEY_ID')
 cloudflare_r2_secret = os.getenv('CLOUDFLARE_R2_SECRET')
