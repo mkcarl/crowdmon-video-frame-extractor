@@ -11,9 +11,9 @@ cloudflare_r2_secret = os.getenv('CLOUDFLARE_R2_SECRET')
 app = Flask(__name__)
 
 s3 = boto3.client('s3',
-    endpoint_url= cloudflare_r2_url,
-    aws_access_key_id= cloudflare_r2_key_id,
-    aws_secret_access_key= cloudflare_r2_secret
+    endpoint_url=cloudflare_r2_url,
+    aws_access_key_id=cloudflare_r2_key_id,
+    aws_secret_access_key=cloudflare_r2_secret
     )
 
 
@@ -28,7 +28,8 @@ def upload(image_name: str, image):
 
 @app.route('/')
 def index():
-    return 'Crowdmon - Video Extractor'
+    foobar = os.getenv('FOOBAR')
+    return f'Crowdmon - Video Extractor {foobar}'
 
 @app.route('/extract', methods=['POST'])
 def extract(): 
