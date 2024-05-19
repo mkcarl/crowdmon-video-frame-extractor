@@ -20,6 +20,7 @@ s3 = boto3.client('s3',
 
 
 def upload(image_name: str, image):
+    print(cloudflare_r2_url, cloudflare_r2_key_id, cloudflare_r2_secret)
     _, buffer = cv2.imencode(".jpg", image)
     img_data = BytesIO(buffer)
     key = f'{image_name}'
@@ -70,7 +71,7 @@ def extract_and_upload():
         try: 
             image_url = upload(image_name, frame)
         except Exception as e:
-            return {'error': 'Error uploading image', 'code': 500}
+            return {'error': e, 'code': 500}
         
         
         return {'data': image_url, 'code': 200} 
