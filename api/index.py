@@ -23,7 +23,7 @@ s3 = boto3.client('s3',
 def upload(image_name: str, image):
     _, buffer = cv2.imencode(".jpg", image)
     img_data = BytesIO(buffer)
-    key = f'{image_name}'
+    key = f'extract/{image_name}'
 
     s3.put_object(Body=img_data, Bucket='crowdmon', Key=key)
     return f'https://images.crowdmon.mkcarl.com/{key}'
