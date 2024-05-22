@@ -60,21 +60,24 @@ def extract_and_upload():
         timestamp = data['timestamp']
         image_name = data['image_name']
         
+        if (not video_url) or (not timestamp) or (not image_name):
+            return {'error': 'Missing required fields'}, 400
+        
         cap = cv2.VideoCapture(video_url)
         cap.set(cv2.CAP_PROP_POS_MSEC, timestamp*1000)
         
         ret, frame = cap.read() 
         
         if not ret:
-            return {'error': 'Could not extract frame from video', 'code': 500}
+            return {'error': 'Could not extract frame from video'}, 500
         
         try: 
             image_url = upload(image_name, frame)
         except Exception as e:
-            return {'error': e, 'code': 500}
+            return {'error': e}, 500
         
         
-        return {'data': image_url, 'code': 200} 
+        return {'data': image_url} 
 
 if __name__ == '__main__':
     app.run(debug=True)
