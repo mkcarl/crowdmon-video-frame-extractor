@@ -60,9 +60,6 @@ def extract_and_upload():
         timestamp = data['timestamp']
         image_name = data['image_name']
         
-        if (not video_url) or (not timestamp) or (not image_name):
-            return {'error': 'Missing required fields'}, 400
-        
         cap = cv2.VideoCapture(video_url)
         cap.set(cv2.CAP_PROP_POS_MSEC, timestamp*1000)
         
