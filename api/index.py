@@ -72,7 +72,7 @@ def extract_and_upload():
             image_url = upload(image_name, frame)
         except Exception as e:
             print(e)
-            return {'error': e}, 500
+            return {'error': 'Error uploading file'}, 500
         
         
         return {'data': image_url} 
