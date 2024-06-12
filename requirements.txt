@@ -1,4 +1,3 @@
-Flask==3.0.3
-opencv-python-headless==4.9.0.80
 boto3==1.34.108
-python-dotenv==1.0.1
+functions_framework
+ffmpeg-python
