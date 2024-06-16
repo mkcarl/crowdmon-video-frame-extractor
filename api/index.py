@@ -1,3 +1,4 @@
+import base64
 from io import BytesIO
 from flask import Flask, request, make_response
 import cv2
@@ -28,6 +29,11 @@ def upload(image_name: str, image):
     s3.put_object(Body=img_data, Bucket='crowdmon', Key=key)
     return f'https://images.crowdmon.mkcarl.com/{key}'
 
+def uploadB64(key:str, image:str):
+    image_data = base64.b64decode(image)
+    key = f'v/{key}'
+    s3.put_object(Body=image_data, Bucket='crowdmon', Key=key, ContentType='image/jpeg')
+    return f'https://images.crowdmon.mkcarl.com/{key}'
 
 @app.route('/')
 def index():
@@ -76,6 +82,26 @@ def extract_and_upload():
         
         
         return {'data': image_url} 
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    if request.method != 'POST':
+        return {'error': 'Method not allowed'}, 405
+    
+    data = request.get_json()
+    key = data['key']
+    image = data['image']
+        
+    if not key or not image:
+        return {'error': 'Key and image are required'}, 400
+    
+    try: 
+        image_url = uploadB64(key, image)
+    except Exception as e:
+        print(e)
+        return {'error': 'Error uploading file'}, 500
+    
+    return {'data': image_url}
 
 if __name__ == '__main__':
     app.run(debug=True)
